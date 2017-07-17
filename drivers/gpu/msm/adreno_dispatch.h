@@ -75,7 +75,7 @@ struct adreno_dispatcher_drawqueue {
  * @fault: Non-zero if a fault was detected.
  * @pending: Priority list of contexts waiting to submit drawobjs
  * @plist_lock: Spin lock to protect the pending queue
- * @work: work_struct to put the dispatcher in a work queue
+ * @work: kthread_work to put the dispatcher in a work queue
  * @kobj: kobject for the dispatcher directory in the device sysfs node
  * @idle_gate: Gate to wait on for dispatcher to idle
  * @disp_preempt_fair_sched: If set then dispatcher will try to be fair to
@@ -91,7 +91,7 @@ struct adreno_dispatcher {
 	atomic_t fault;
 	struct plist_head pending;
 	spinlock_t plist_lock;
-	struct work_struct work;
+	struct kthread_work work;
 	struct kobject kobj;
 	struct completion idle_gate;
 	unsigned int disp_preempt_fair_sched;
